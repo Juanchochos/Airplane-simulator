@@ -68,7 +68,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "Grlib/grlib/grlib.h"
+#include "../grlib/grlib.h"
 
 //*****************************************************************************
 //

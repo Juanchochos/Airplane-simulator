@@ -1,6 +1,6 @@
 // This code was ported from TI's sample code. See Copyright notice at the bottom of this file.
 
-#include "Grlib/grlib/grlib.h"
+#include "GrLib/grlib/grlib.h"
 #include "LcdDriver/lcd_driver.h"
 #include "LcdDriver/lower_driver.h"
 #include "msp430fr6989.h"

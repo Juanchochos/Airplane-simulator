@@ -1,6 +1,6 @@
 /* 
 #include "msp430fr6989.h"
-#include "Grlib/grlib/grlib.h"          // Graphics library (grlib)
+#include "GrLib/grlib/grlib.h"          // Graphics library (grlib)
 #include "LcdDriver/lcd_driver.h"       // LCD driver
 #include <stdio.h>
 
@@ -99,15 +99,6 @@ void Initialize_Clock_System() {
 
   return;
 }
-
-
-
-
-
-
-
-
-
 
 
 

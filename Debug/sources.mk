@@ -106,5 +106,8 @@ S62_DEPS__QUOTED :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 . \
+GrLib/fonts \
+GrLib/grlib \
+LcdDriver \
 driverlib/MSP430FR5xx_6xx \
 

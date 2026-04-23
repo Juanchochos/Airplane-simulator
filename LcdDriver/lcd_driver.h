@@ -4,7 +4,7 @@
 #define __CRYSTALFONTZLCD_H__
 
 #include <stdint.h>
-#include "Grlib/grlib/grlib.h"
+#include "../GrLib/grlib/grlib.h"
 
 // LCD Screen Dimensions
 #define LCD_VERTICAL_MAX                   128

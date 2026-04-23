@@ -7,33 +7,33 @@ CMD_SRCS += \
 ../lnk_msp430fr6989.cmd 
 
 C_SRCS += \
-../main\ copy\ 1.c \
-../main\ copy.c \
-../main.c 
+../main.c \
+../screens.c \
+../screens_example.c 
 
 C_DEPS += \
-./main\ copy\ 1.d \
-./main\ copy.d \
-./main.d 
+./main.d \
+./screens.d \
+./screens_example.d 
 
 OBJS += \
-./main\ copy\ 1.obj \
-./main\ copy.obj \
-./main.obj 
+./main.obj \
+./screens.obj \
+./screens_example.obj 
 
 OBJS__QUOTED += \
-"main copy 1.obj" \
-"main copy.obj" \
-"main.obj" 
+"main.obj" \
+"screens.obj" \
+"screens_example.obj" 
 
 C_DEPS__QUOTED += \
-"main copy 1.d" \
-"main copy.d" \
-"main.d" 
+"main.d" \
+"screens.d" \
+"screens_example.d" 
 
 C_SRCS__QUOTED += \
-"../main copy 1.c" \
-"../main copy.c" \
-"../main.c" 
+"../main.c" \
+"../screens.c" \
+"../screens_example.c" 
 
 

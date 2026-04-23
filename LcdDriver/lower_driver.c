@@ -2,7 +2,7 @@
 
 #include <LcdDriver/lower_driver.h>
 #include "msp430fr6989.h"
-#include "Grlib/grlib/grlib.h"
+#include "../GrLib/grlib/grlib.h"
 #include <stdint.h>
 
 void HAL_LCD_PortInit(void)
