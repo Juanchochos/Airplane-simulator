@@ -1,7 +1,7 @@
 ******************************************************************************
                   MSP430 Linker Unix v21.6.1                   
 ******************************************************************************
->> Linked Thu Apr 23 09:22:03 2026
+>> Linked Thu Apr 23 09:52:03 2026
 
 OUTPUT FILE NAME:   <Joystick.out>
 ENTRY POINT SYMBOL: "_c_int00_noargs_mpu"  address: 00004400
@@ -18,8 +18,8 @@ MEMORY CONFIGURATION
   INFOC                 00001880   00000080  00000000  00000080  RWIX
   INFOB                 00001900   00000080  00000000  00000080  RWIX
   INFOA                 00001980   00000080  00000000  00000080  RWIX
-  RAM                   00001c00   00000800  000004ce  00000332  RWIX
-  FRAM                  00004400   0000bb80  0000a718  00001468  RWIX
+  RAM                   00001c00   00000800  000004d0  00000330  RWIX
+  FRAM                  00004400   0000bb80  0000a726  0000145a  RWIX
   JTAGSIGNATURE         0000ff80   00000004  00000004  00000000  RWIX  ffff 
   BSLSIGNATURE          0000ff84   00000004  00000004  00000000  RWIX  ffff 
   IPESIGNATURE          0000ff88   00000008  00000008  00000000  RWIX  ffff 
@@ -79,7 +79,7 @@ MEMORY CONFIGURATION
   INT53                 0000fffa   00000002  00000002  00000000  RWIX
   INT54                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
-  FRAM2                 00010000   00013ff8  00008ee6  0000b112  RWIX
+  FRAM2                 00010000   00013ff8  00009b2a  0000a4ce  RWIX
 
 
 SECTION ALLOCATION MAP
@@ -108,12 +108,12 @@ section   page    origin      length       input sections
 .ipe_vars 
 *          0    00004400    00000000     UNINITIALIZED
 
-.cinit     0    0000eaec    0000002c     
-                  0000eaec    0000000c     (__TI_handler_table)
-                  0000eaf8    00000009     (.cinit..data.load) [load image, compression = lzss]
-                  0000eb01    00000001     --HOLE-- [fill = 0]
-                  0000eb02    00000006     (.cinit..bss.load) [load image, compression = zero_init]
-                  0000eb08    00000010     (__TI_cinit_table)
+.cinit     0    0000eaf8    0000002e     
+                  0000eaf8    0000000c     (__TI_handler_table)
+                  0000eb04    0000000b     (.cinit..data.load) [load image, compression = lzss]
+                  0000eb0f    00000001     --HOLE-- [fill = 0]
+                  0000eb10    00000006     (.cinit..bss.load) [load image, compression = zero_init]
+                  0000eb16    00000010     (__TI_cinit_table)
 
 .binit     0    00004400    00000000     
 
@@ -136,8 +136,8 @@ section   page    origin      length       input sections
                   00002024    00000001     (.common:Lcd_Orientation)
                   00002025    00000001     (.common:Lcd_PenSolid)
 
-.data      0    00002026    00000008     UNINITIALIZED
-                  00002026    00000008     main.obj (.data)
+.data      0    00002026    0000000a     UNINITIALIZED
+                  00002026    0000000a     main.obj (.data)
 
 .stack     0    00002360    000000a0     UNINITIALIZED
                   00002360    00000004     rts430x_lc_rd_eabi.lib : boot.c.obj (.stack)
@@ -249,7 +249,7 @@ SYSNMI     0    0000fffc    00000002
 .reset     0    0000fffe    00000002     
                   0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.c.obj (.reset)
 
-.const.1   0    00004428    0000a6c4     
+.const.1   0    00004428    0000a6d0     
                   00004428    00002000     screens.obj (.const:.string:pixel_climbingLeftBank4BPP_UNCOMP)
                   00006428    00002000     screens.obj (.const:.string:pixel_climbingRightBank4BPP_UNCOMP)
                   00008428    00002000     screens.obj (.const:.string:pixel_descendingLeftBank4BPP_UNCOMP)
@@ -276,7 +276,9 @@ SYSNMI     0    0000fffc    00000002
                   0000eab4    00000010     screens.obj (.const:LevelRightBankImage)
                   0000eac4    00000010     screens.obj (.const:StraightClimbImage)
                   0000ead4    00000010     screens.obj (.const:StraightDescentImage)
-                  0000eae4    00000008     lcd_driver.obj (.const:$P$T0$1)
+                  0000eae4    0000000b     main.obj (.const:.string:$P$T0$3)
+                  0000eaef    00000001     --HOLE-- [fill = 0]
+                  0000eaf0    00000008     lcd_driver.obj (.const:$P$T0$1)
 
 .const.2   0    00010000    00008000     
                   00010000    00002000     screens.obj (.const:.string:pixel_levelLeftBank4BPP_UNCOMP)
@@ -284,58 +286,67 @@ SYSNMI     0    0000fffc    00000002
                   00014000    00002000     screens.obj (.const:.string:pixel_straightClimb4BPP_UNCOMP)
                   00016000    00002000     screens.obj (.const:.string:pixel_straightDescent4BPP_UNCOMP)
 
-.text      0    00018000    00000ee6     
-                  00018000    00000216     image.obj (.text:Graphics_drawImage)
-                  00018216    0000013c     lcd_driver.obj (.text:Crystalfontz128x128_PixelDrawMultiple)
-                  00018352    00000118     lcd_driver.obj (.text:Crystalfontz128x128_Init)
-                  0001846a    000000d4     main.obj (.text:accel_mode)
-                  0001853e    000000d2     main.obj (.text:joystick_mode)
-                  00018610    000000b2     main.obj (.text:uart_write_uint16)
-                  000186c2    000000a8     lcd_driver.obj (.text:Crystalfontz128x128_SetDrawFrame)
-                  0001876a    00000084     main.obj (.text:show_screen)
-                  000187ee    00000076     rts430x_lc_rd_eabi.lib : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
-                  00018864    0000005a     lcd_driver.obj (.text:Crystalfontz128x128_RectFill)
-                  000188be    0000005a     main.obj (.text:Initialize_lcd_screen)
-                  00018918    00000058     main.obj (.text:Initialize_ADC)
-                  00018970    00000054     rts430x_lc_rd_eabi.lib : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit_hold_wdt:__TI_auto_init_nobinit_nopinit_hold_wdt)
-                  000189c4    0000004e     image.obj (.text:Graphics_convertPalette)
-                  00018a12    00000048     lower_driver.obj (.text:HAL_LCD_SpiInit)
-                  00018a5a    00000046     lcd_driver.obj (.text:Crystalfontz128x128_SetOrientation)
-                  00018aa0    00000046     main.obj (.text:main)
-                  00018ae6    00000042     lcd_driver.obj (.text:Crystalfontz128x128_ColorTranslate)
-                  00018b28    0000003e     rts430x_lc_rd_eabi.lib : lsr32.asm.obj (.text:l_lsr_const)
-                  00018b66    0000003c     lcd_driver.obj (.text:Crystalfontz128x128_LineDrawV)
-                  00018ba2    0000003c     context.obj (.text:Graphics_initContext)
-                  00018bde    0000003a     lcd_driver.obj (.text:Crystalfontz128x128_LineDrawH)
-                  00018c18    0000003a     display.obj (.text:Graphics_drawMultiplePixelsOnDisplay)
-                  00018c52    00000038     main.obj (.text:Play_Buzzer)
-                  00018c8a    00000030     lcd_driver.obj (.text:Crystalfontz128x128_ClearScreen)
-                  00018cba    0000002e     lcd_driver.obj (.text:Crystalfontz128x128_PixelDraw)
-                  00018ce8    0000002e     main.obj (.text:Initialize_Clock_System)
-                  00018d16    0000002c     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
-                  00018d42    0000002c     rts430x_lc_rd_eabi.lib : div16s.asm.obj (.text)
-                  00018d6e    00000028     main.obj (.text:Initialize_UART)
-                  00018d96    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init)
-                  00018dba    0000001e     lower_driver.obj (.text:HAL_LCD_PortInit)
-                  00018dd8    00000018     context.obj (.text:Graphics_setBackgroundColor)
-                  00018df0    00000018     context.obj (.text:Graphics_setForegroundColor)
-                  00018e08    00000018     rts430x_lc_rd_eabi.lib : mult16_f5hw.asm.obj (.text)
-                  00018e20    00000016                            : div16u.asm.obj (.text)
-                  00018e36    00000014                            : memcpy.c.obj (.text:memcpy)
-                  00018e4a    00000012     lower_driver.obj (.text:HAL_LCD_writeCommand)
-                  00018e5c    00000012     lower_driver.obj (.text:HAL_LCD_writeData)
-                  00018e6e    00000012     rts430x_lc_rd_eabi.lib : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
-                  00018e80    00000010     context.obj (.text:Graphics_clearDisplay)
-                  00018e90    0000000e     display.obj (.text:Graphics_clearDisplayOnDisplay)
-                  00018e9e    0000000e     display.obj (.text:Graphics_drawPixelOnDisplay)
-                  00018eac    0000000e     display.obj (.text:Graphics_translateColorOnDisplay)
-                  00018eba    0000000e     main.obj (.text:uart_write_char)
-                  00018ec8    0000000a     rts430x_lc_rd_eabi.lib : lsr16.asm.obj (.text)
-                  00018ed2    00000006     context.obj (.text:Graphics_setFont)
-                  00018ed8    00000006     rts430x_lc_rd_eabi.lib : exit.c.obj (.text:abort)
-                  00018ede    00000004                            : pre_init.c.obj (.text:_system_pre_init)
-                  00018ee2    00000002     lcd_driver.obj (.text:Crystalfontz128x128_Flush)
-                  00018ee4    00000002     rts430x_lc_rd_eabi.lib : startup.c.obj (.text:_system_post_cinit)
+.text      0    00018000    00001b2a     
+                  00018000    00000808     string.obj (.text:Graphics_drawString)
+                  00018808    00000216     image.obj (.text:Graphics_drawImage)
+                  00018a1e    00000170     main.obj (.text:show_screen)
+                  00018b8e    0000013c     lcd_driver.obj (.text:Crystalfontz128x128_PixelDrawMultiple)
+                  00018cca    00000118     lcd_driver.obj (.text:Crystalfontz128x128_Init)
+                  00018de2    000000ee     main.obj (.text:accel_mode)
+                  00018ed0    000000ec     main.obj (.text:joystick_mode)
+                  00018fbc    000000dc     line.obj (.text:Graphics_drawLineH)
+                  00019098    000000c2     string.obj (.text:Graphics_getStringWidth)
+                  0001915a    000000b2     main.obj (.text:uart_write_uint16)
+                  0001920c    000000a8     lcd_driver.obj (.text:Crystalfontz128x128_SetDrawFrame)
+                  000192b4    00000078     string.obj (.text:Graphics_drawStringCentered)
+                  0001932c    00000076     rts430x_lc_rd_eabi.lib : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
+                  000193a2    0000005a     lcd_driver.obj (.text:Crystalfontz128x128_RectFill)
+                  000193fc    0000005a     main.obj (.text:Initialize_lcd_screen)
+                  00019456    00000058     main.obj (.text:Initialize_ADC)
+                  000194ae    00000058     rts430x_lc_rd_eabi.lib : div32u.asm.obj (.text)
+                  00019506    00000054                            : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit_hold_wdt:__TI_auto_init_nobinit_nopinit_hold_wdt)
+                  0001955a    0000004e     image.obj (.text:Graphics_convertPalette)
+                  000195a8    0000004a     string.obj (.text:Graphics_getNumberOfLeadingZeros)
+                  000195f2    00000048     lower_driver.obj (.text:HAL_LCD_SpiInit)
+                  0001963a    00000046     lcd_driver.obj (.text:Crystalfontz128x128_SetOrientation)
+                  00019680    00000046     main.obj (.text:main)
+                  000196c6    00000042     lcd_driver.obj (.text:Crystalfontz128x128_ColorTranslate)
+                  00019708    00000040     rts430x_lc_rd_eabi.lib : div32s.asm.obj (.text)
+                  00019748    0000003e                            : lsr32.asm.obj (.text:l_lsr_const)
+                  00019786    0000003c     lcd_driver.obj (.text:Crystalfontz128x128_LineDrawV)
+                  000197c2    0000003c     context.obj (.text:Graphics_initContext)
+                  000197fe    0000003a     lcd_driver.obj (.text:Crystalfontz128x128_LineDrawH)
+                  00019838    0000003a     display.obj (.text:Graphics_drawMultiplePixelsOnDisplay)
+                  00019872    00000038     main.obj (.text:Play_Buzzer)
+                  000198aa    00000030     lcd_driver.obj (.text:Crystalfontz128x128_ClearScreen)
+                  000198da    0000002e     lcd_driver.obj (.text:Crystalfontz128x128_PixelDraw)
+                  00019908    0000002e     main.obj (.text:Initialize_Clock_System)
+                  00019936    0000002c     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
+                  00019962    0000002c     rts430x_lc_rd_eabi.lib : div16s.asm.obj (.text)
+                  0001998e    00000028     main.obj (.text:Initialize_UART)
+                  000199b6    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init)
+                  000199da    0000001e     lower_driver.obj (.text:HAL_LCD_PortInit)
+                  000199f8    0000001a     display.obj (.text:Graphics_drawHorizontalLineOnDisplay)
+                  00019a12    00000018     context.obj (.text:Graphics_setBackgroundColor)
+                  00019a2a    00000018     context.obj (.text:Graphics_setForegroundColor)
+                  00019a42    00000018     rts430x_lc_rd_eabi.lib : mult16_f5hw.asm.obj (.text)
+                  00019a5a    00000016                            : div16u.asm.obj (.text)
+                  00019a70    00000014                            : memcpy.c.obj (.text:memcpy)
+                  00019a84    00000012     lower_driver.obj (.text:HAL_LCD_writeCommand)
+                  00019a96    00000012     lower_driver.obj (.text:HAL_LCD_writeData)
+                  00019aa8    00000012     rts430x_lc_rd_eabi.lib : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
+                  00019aba    00000010     context.obj (.text:Graphics_clearDisplay)
+                  00019aca    0000000e     display.obj (.text:Graphics_clearDisplayOnDisplay)
+                  00019ad8    0000000e     display.obj (.text:Graphics_drawPixelOnDisplay)
+                  00019ae6    0000000e     display.obj (.text:Graphics_translateColorOnDisplay)
+                  00019af4    0000000e     main.obj (.text:uart_write_char)
+                  00019b02    0000000a     rts430x_lc_rd_eabi.lib : lsl16.asm.obj (.text)
+                  00019b0c    0000000a                            : lsr16.asm.obj (.text)
+                  00019b16    00000006     context.obj (.text:Graphics_setFont)
+                  00019b1c    00000006     rts430x_lc_rd_eabi.lib : exit.c.obj (.text:abort)
+                  00019b22    00000004                            : pre_init.c.obj (.text:_system_pre_init)
+                  00019b26    00000002     lcd_driver.obj (.text:Crystalfontz128x128_Flush)
+                  00019b28    00000002     rts430x_lc_rd_eabi.lib : startup.c.obj (.text:_system_post_cinit)
 
 MODULE SUMMARY
 
@@ -343,9 +354,9 @@ MODULE SUMMARY
        ------                       ----   -------   -------
     ./
        screens.obj                  0      74448     0      
-       main.obj                     1136   0         36     
+       main.obj                     1424   11        38     
     +--+----------------------------+------+---------+---------+
-       Total:                       1136   74448     36     
+       Total:                       1424   74459     38     
                                                             
     ./GrLib/fonts/
        fontfixed6x8.obj             0      960       0      
@@ -353,11 +364,13 @@ MODULE SUMMARY
        Total:                       0      960       0      
                                                             
     ./GrLib/grlib/
+       string.obj                   2444   0         0      
        image.obj                    612    0         1024   
+       line.obj                     220    0         0      
        context.obj                  130    0         0      
-       display.obj                  100    0         0      
+       display.obj                  126    0         0      
     +--+----------------------------+------+---------+---------+
-       Total:                       842    0         1024   
+       Total:                       3532   0         1024   
                                                             
     ./LcdDriver/
        lcd_driver.obj               1204   52        10     
@@ -372,7 +385,9 @@ MODULE SUMMARY
                                                             
     /home/juancho/ti/ccs2041/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/lib/rts430x_lc_rd_eabi.lib
        copy_decompress_lzss.c.obj   118    0         0      
+       div32u.asm.obj               88     0         0      
        autoinit.c.obj               84     0         0      
+       div32s.asm.obj               64     0         0      
        lsr32.asm.obj                62     0         0      
        div16s.asm.obj               44     0         0      
        copy_zero_init.c.obj         36     0         0      
@@ -381,6 +396,7 @@ MODULE SUMMARY
        div16u.asm.obj               22     0         0      
        memcpy.c.obj                 20     0         0      
        copy_decompress_none.c.obj   18     0         0      
+       lsl16.asm.obj                10     0         0      
        lsr16.asm.obj                10     0         0      
        isr_trap.asm.obj             8      0         0      
        exit.c.obj                   6      0         0      
@@ -415,24 +431,24 @@ MODULE SUMMARY
        int54.asm.obj                0      2         0      
        startup.c.obj                2      0         0      
     +--+----------------------------+------+---------+---------+
-       Total:                       490    58        0      
+       Total:                       652    58        0      
                                                             
        Stack:                       0      0         160    
-       Linker Generated:            0      43        0      
+       Linker Generated:            0      45        0      
     +--+----------------------------+------+---------+---------+
-       Grand Total:                 3854   75561     1230   
+       Grand Total:                 6994   75574     1232   
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 0000eb08 records: 2, size/record: 8, table size: 16
-	.data: load addr=0000eaf8, load size=00000009 bytes, run addr=00002026, run size=00000008 bytes, compression=lzss
-	.bss: load addr=0000eb02, load size=00000006 bytes, run addr=00001c00, run size=00000426 bytes, compression=zero_init
+__TI_cinit_table @ 0000eb16 records: 2, size/record: 8, table size: 16
+	.data: load addr=0000eb04, load size=0000000b bytes, run addr=00002026, run size=0000000a bytes, compression=lzss
+	.bss: load addr=0000eb10, load size=00000006 bytes, run addr=00001c00, run size=00000426 bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 0000eaec records: 3, size/record: 4, table size: 12
+__TI_handler_table @ 0000eaf8 records: 3, size/record: 4, table size: 12
 	index: 0, handler: __TI_zero_init
 	index: 1, handler: __TI_decompress_lzss
 	index: 2, handler: __TI_decompress_none
@@ -699,7 +715,7 @@ address   name
 000009ce  AESAXIN_L                              
 000004be  BCD2BIN                                
 000004bc  BIN2BCD                                
-00018ed8  C$$EXIT                                
+00019b1c  C$$EXIT                                
 0000043e  CAPTIO0CTL                             
 0000043f  CAPTIO0CTL_H                           
 0000043e  CAPTIO0CTL_L                           
@@ -805,9 +821,9 @@ address   name
 0000016c  CSCTL6_L                               
 0000ea54  ClimbingLeftBankImage                  
 0000ea64  ClimbingRightBankImage                 
-00018352  Crystalfontz128x128_Init               
-000186c2  Crystalfontz128x128_SetDrawFrame       
-00018a5a  Crystalfontz128x128_SetOrientation     
+00018cca  Crystalfontz128x128_Init               
+0001920c  Crystalfontz128x128_SetDrawFrame       
+0001963a  Crystalfontz128x128_SetOrientation     
 00000510  DMA0CTL                                
 00000516  DMA0DA                                 
 00000518  DMA0DAH                                
@@ -1181,24 +1197,29 @@ address   name
 00000146  GCCTL1                                 
 00000147  GCCTL1_H                               
 00000146  GCCTL1_L                               
-00018e80  Graphics_clearDisplay                  
-00018e90  Graphics_clearDisplayOnDisplay         
-00018000  Graphics_drawImage                     
-00018c18  Graphics_drawMultiplePixelsOnDisplay   
-00018e9e  Graphics_drawPixelOnDisplay            
-00018ba2  Graphics_initContext                   
-00018dd8  Graphics_setBackgroundColor            
-00018ed2  Graphics_setFont                       
-00018df0  Graphics_setForegroundColor            
-00018eac  Graphics_translateColorOnDisplay       
-00018dba  HAL_LCD_PortInit                       
-00018a12  HAL_LCD_SpiInit                        
-00018e4a  HAL_LCD_writeCommand                   
-00018e5c  HAL_LCD_writeData                      
-00018918  Initialize_ADC                         
-00018ce8  Initialize_Clock_System                
-00018d6e  Initialize_UART                        
-000188be  Initialize_lcd_screen                  
+00019aba  Graphics_clearDisplay                  
+00019aca  Graphics_clearDisplayOnDisplay         
+000199f8  Graphics_drawHorizontalLineOnDisplay   
+00018808  Graphics_drawImage                     
+00018fbc  Graphics_drawLineH                     
+00019838  Graphics_drawMultiplePixelsOnDisplay   
+00019ad8  Graphics_drawPixelOnDisplay            
+00018000  Graphics_drawString                    
+000192b4  Graphics_drawStringCentered            
+00019098  Graphics_getStringWidth                
+000197c2  Graphics_initContext                   
+00019a12  Graphics_setBackgroundColor            
+00019b16  Graphics_setFont                       
+00019a2a  Graphics_setForegroundColor            
+00019ae6  Graphics_translateColorOnDisplay       
+000199da  HAL_LCD_PortInit                       
+000195f2  HAL_LCD_SpiInit                        
+00019a84  HAL_LCD_writeCommand                   
+00019a96  HAL_LCD_writeData                      
+00019456  Initialize_ADC                         
+00019908  Initialize_Clock_System                
+0001998e  Initialize_UART                        
+000193fc  Initialize_lcd_screen                  
 00000a40  LCDBM1                                 
 00000a49  LCDBM10                                
 00000a4a  LCDBM11                                
@@ -1532,7 +1553,7 @@ address   name
 0000012a  PMMIFG                                 
 0000012b  PMMIFG_H                               
 0000012a  PMMIFG_L                               
-00018c52  Play_Buzzer                            
+00019872  Play_Buzzer                            
 00000158  RCCTL0                                 
 00000159  RCCTL0_H                               
 00000158  RCCTL0_L                               
@@ -1861,15 +1882,15 @@ address   name
 0000015c  WDTCTL_L                               
 00002400  __STACK_END                            
 000000a0  __STACK_SIZE                           
-0000eb08  __TI_CINIT_Base                        
-0000eb18  __TI_CINIT_Limit                       
-0000eb18  __TI_CINIT_Warm                        
-0000eaec  __TI_Handler_Table_Base                
-0000eaf8  __TI_Handler_Table_Limit               
+0000eb16  __TI_CINIT_Base                        
+0000eb26  __TI_CINIT_Limit                       
+0000eb26  __TI_CINIT_Warm                        
+0000eaf8  __TI_Handler_Table_Base                
+0000eb04  __TI_Handler_Table_Limit               
 00004420  __TI_ISR_TRAP                          
-00018970  __TI_auto_init_nobinit_nopinit_hold_wdt
-000187ee  __TI_decompress_lzss                   
-00018e6e  __TI_decompress_none                   
+00019506  __TI_auto_init_nobinit_nopinit_hold_wdt
+0001932c  __TI_decompress_lzss                   
+00019aa8  __TI_decompress_none                   
 0000ffc6  __TI_int27                             
 0000ffc8  __TI_int28                             
 0000ffca  __TI_int29                             
@@ -1901,38 +1922,43 @@ address   name
 ffffffff  __TI_pprof_out_hndl                    
 ffffffff  __TI_prof_data_size                    
 ffffffff  __TI_prof_data_start                   
-00018d96  __TI_zero_init                         
+000199b6  __TI_zero_init                         
 ffffffff  __c_args__                             
 00000001  __mpu_enable                           
-00018d16  __mpu_init                             
-00018d42  __mspabi_divi                          
-00018e20  __mspabi_divu                          
-00018e08  __mspabi_mpyi_f5hw                     
-00018d42  __mspabi_remi                          
-00018e20  __mspabi_remu                          
-00018ec8  __mspabi_srli                          
-00018b60  __mspabi_srll_1                        
-00018b3c  __mspabi_srll_10                       
-00018b38  __mspabi_srll_11                       
-00018b34  __mspabi_srll_12                       
-00018b30  __mspabi_srll_13                       
-00018b2c  __mspabi_srll_14                       
-00018b28  __mspabi_srll_15                       
-00018b5c  __mspabi_srll_2                        
-00018b58  __mspabi_srll_3                        
-00018b54  __mspabi_srll_4                        
-00018b50  __mspabi_srll_5                        
-00018b4c  __mspabi_srll_6                        
-00018b48  __mspabi_srll_7                        
-00018b44  __mspabi_srll_8                        
-00018b40  __mspabi_srll_9                        
+00019936  __mpu_init                             
+00019962  __mspabi_divi                          
+00019708  __mspabi_divli                         
+00019a5a  __mspabi_divu                          
+000194ae  __mspabi_divul                         
+00019a42  __mspabi_mpyi_f5hw                     
+00019962  __mspabi_remi                          
+00019708  __mspabi_remli                         
+00019a5a  __mspabi_remu                          
+000194ae  __mspabi_remul                         
+00019b02  __mspabi_slli                          
+00019b0c  __mspabi_srli                          
+00019780  __mspabi_srll_1                        
+0001975c  __mspabi_srll_10                       
+00019758  __mspabi_srll_11                       
+00019754  __mspabi_srll_12                       
+00019750  __mspabi_srll_13                       
+0001974c  __mspabi_srll_14                       
+00019748  __mspabi_srll_15                       
+0001977c  __mspabi_srll_2                        
+00019778  __mspabi_srll_3                        
+00019774  __mspabi_srll_4                        
+00019770  __mspabi_srll_5                        
+0001976c  __mspabi_srll_6                        
+00019768  __mspabi_srll_7                        
+00019764  __mspabi_srll_8                        
+00019760  __mspabi_srll_9                        
 00004400  _c_int00_noargs_mpu                    
 0000fffe  _reset_vector                          
 00002360  _stack                                 
-00018ee4  _system_post_cinit                     
-00018ede  _system_pre_init                       
-00018ed8  abort                                  
-0001846a  accel_mode                             
+00019b28  _system_post_cinit                     
+00019b22  _system_pre_init                       
+00019b1c  abort                                  
+00018de2  accel_mode                             
 00002028  altitude                               
 00004400  fram_ipe_end                           
 00004400  fram_ipe_start                         
@@ -1941,16 +1967,16 @@ ffffffff  __c_args__
 00002000  g_sContext                             
 0000ea28  g_sCrystalfontz128x128                 
 0000e720  g_sFontFixed6x8                        
-0001853e  joystick_mode                          
-00018aa0  main                                   
-00018e36  memcpy                                 
+00018ed0  joystick_mode                          
+00019680  main                                   
+00019a70  memcpy                                 
 0000a501  mpu_ctl0_value                         
 00001513  mpu_sam_value                          
 00000440  mpu_segment_border1                    
 00000440  mpu_segment_border2                    
-0001876a  show_screen                            
-00018eba  uart_write_char                        
-00018610  uart_write_uint16                      
+00018a1e  show_screen                            
+00019af4  uart_write_char                        
+0001915a  uart_write_uint16                      
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -3369,11 +3395,11 @@ address   name
 0000eab4  LevelRightBankImage                    
 0000eac4  StraightClimbImage                     
 0000ead4  StraightDescentImage                   
-0000eaec  __TI_Handler_Table_Base                
-0000eaf8  __TI_Handler_Table_Limit               
-0000eb08  __TI_CINIT_Base                        
-0000eb18  __TI_CINIT_Limit                       
-0000eb18  __TI_CINIT_Warm                        
+0000eaf8  __TI_Handler_Table_Base                
+0000eb04  __TI_Handler_Table_Limit               
+0000eb16  __TI_CINIT_Base                        
+0000eb26  __TI_CINIT_Limit                       
+0000eb26  __TI_CINIT_Warm                        
 0000ffc6  __TI_int27                             
 0000ffc8  __TI_int28                             
 0000ffca  __TI_int29                             
@@ -3403,68 +3429,78 @@ address   name
 0000fffa  __TI_int53                             
 0000fffc  __TI_int54                             
 0000fffe  _reset_vector                          
-00018000  Graphics_drawImage                     
-00018352  Crystalfontz128x128_Init               
-0001846a  accel_mode                             
-0001853e  joystick_mode                          
-00018610  uart_write_uint16                      
-000186c2  Crystalfontz128x128_SetDrawFrame       
-0001876a  show_screen                            
-000187ee  __TI_decompress_lzss                   
-000188be  Initialize_lcd_screen                  
-00018918  Initialize_ADC                         
-00018970  __TI_auto_init_nobinit_nopinit_hold_wdt
-00018a12  HAL_LCD_SpiInit                        
-00018a5a  Crystalfontz128x128_SetOrientation     
-00018aa0  main                                   
-00018b28  __mspabi_srll_15                       
-00018b2c  __mspabi_srll_14                       
-00018b30  __mspabi_srll_13                       
-00018b34  __mspabi_srll_12                       
-00018b38  __mspabi_srll_11                       
-00018b3c  __mspabi_srll_10                       
-00018b40  __mspabi_srll_9                        
-00018b44  __mspabi_srll_8                        
-00018b48  __mspabi_srll_7                        
-00018b4c  __mspabi_srll_6                        
-00018b50  __mspabi_srll_5                        
-00018b54  __mspabi_srll_4                        
-00018b58  __mspabi_srll_3                        
-00018b5c  __mspabi_srll_2                        
-00018b60  __mspabi_srll_1                        
-00018ba2  Graphics_initContext                   
-00018c18  Graphics_drawMultiplePixelsOnDisplay   
-00018c52  Play_Buzzer                            
-00018ce8  Initialize_Clock_System                
-00018d16  __mpu_init                             
-00018d42  __mspabi_divi                          
-00018d42  __mspabi_remi                          
-00018d6e  Initialize_UART                        
-00018d96  __TI_zero_init                         
-00018dba  HAL_LCD_PortInit                       
-00018dd8  Graphics_setBackgroundColor            
-00018df0  Graphics_setForegroundColor            
-00018e08  __mspabi_mpyi_f5hw                     
-00018e20  __mspabi_divu                          
-00018e20  __mspabi_remu                          
-00018e36  memcpy                                 
-00018e4a  HAL_LCD_writeCommand                   
-00018e5c  HAL_LCD_writeData                      
-00018e6e  __TI_decompress_none                   
-00018e80  Graphics_clearDisplay                  
-00018e90  Graphics_clearDisplayOnDisplay         
-00018e9e  Graphics_drawPixelOnDisplay            
-00018eac  Graphics_translateColorOnDisplay       
-00018eba  uart_write_char                        
-00018ec8  __mspabi_srli                          
-00018ed2  Graphics_setFont                       
-00018ed8  C$$EXIT                                
-00018ed8  abort                                  
-00018ede  _system_pre_init                       
-00018ee4  _system_post_cinit                     
+00018000  Graphics_drawString                    
+00018808  Graphics_drawImage                     
+00018a1e  show_screen                            
+00018cca  Crystalfontz128x128_Init               
+00018de2  accel_mode                             
+00018ed0  joystick_mode                          
+00018fbc  Graphics_drawLineH                     
+00019098  Graphics_getStringWidth                
+0001915a  uart_write_uint16                      
+0001920c  Crystalfontz128x128_SetDrawFrame       
+000192b4  Graphics_drawStringCentered            
+0001932c  __TI_decompress_lzss                   
+000193fc  Initialize_lcd_screen                  
+00019456  Initialize_ADC                         
+000194ae  __mspabi_divul                         
+000194ae  __mspabi_remul                         
+00019506  __TI_auto_init_nobinit_nopinit_hold_wdt
+000195f2  HAL_LCD_SpiInit                        
+0001963a  Crystalfontz128x128_SetOrientation     
+00019680  main                                   
+00019708  __mspabi_divli                         
+00019708  __mspabi_remli                         
+00019748  __mspabi_srll_15                       
+0001974c  __mspabi_srll_14                       
+00019750  __mspabi_srll_13                       
+00019754  __mspabi_srll_12                       
+00019758  __mspabi_srll_11                       
+0001975c  __mspabi_srll_10                       
+00019760  __mspabi_srll_9                        
+00019764  __mspabi_srll_8                        
+00019768  __mspabi_srll_7                        
+0001976c  __mspabi_srll_6                        
+00019770  __mspabi_srll_5                        
+00019774  __mspabi_srll_4                        
+00019778  __mspabi_srll_3                        
+0001977c  __mspabi_srll_2                        
+00019780  __mspabi_srll_1                        
+000197c2  Graphics_initContext                   
+00019838  Graphics_drawMultiplePixelsOnDisplay   
+00019872  Play_Buzzer                            
+00019908  Initialize_Clock_System                
+00019936  __mpu_init                             
+00019962  __mspabi_divi                          
+00019962  __mspabi_remi                          
+0001998e  Initialize_UART                        
+000199b6  __TI_zero_init                         
+000199da  HAL_LCD_PortInit                       
+000199f8  Graphics_drawHorizontalLineOnDisplay   
+00019a12  Graphics_setBackgroundColor            
+00019a2a  Graphics_setForegroundColor            
+00019a42  __mspabi_mpyi_f5hw                     
+00019a5a  __mspabi_divu                          
+00019a5a  __mspabi_remu                          
+00019a70  memcpy                                 
+00019a84  HAL_LCD_writeCommand                   
+00019a96  HAL_LCD_writeData                      
+00019aa8  __TI_decompress_none                   
+00019aba  Graphics_clearDisplay                  
+00019aca  Graphics_clearDisplayOnDisplay         
+00019ad8  Graphics_drawPixelOnDisplay            
+00019ae6  Graphics_translateColorOnDisplay       
+00019af4  uart_write_char                        
+00019b02  __mspabi_slli                          
+00019b0c  __mspabi_srli                          
+00019b16  Graphics_setFont                       
+00019b1c  C$$EXIT                                
+00019b1c  abort                                  
+00019b22  _system_pre_init                       
+00019b28  _system_post_cinit                     
 ffffffff  __TI_pprof_out_hndl                    
 ffffffff  __TI_prof_data_size                    
 ffffffff  __TI_prof_data_start                   
 ffffffff  __c_args__                             
 
-[1509 symbols]
+[1519 symbols]

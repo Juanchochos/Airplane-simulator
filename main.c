@@ -92,12 +92,14 @@ void accel_mode(void){
         while(ADC12CTL1 & ADC12BUSY);       // Wait for it to finish
         unsigned int yValue = ADC12MEM0;    // Read Y result
 
-        // X-axis altitude
-        if (xValue > 2100) {
+        // y-axis altitude
+        if (yValue > 2100) {
             altitude++;
+            if (yValue > 2500) altitude++;
         }
-        if (xValue < 1900 && altitude > 0) {
+        if (yValue < 1900 && altitude > 0) {
             altitude--;
+            if (yValue < 1900 && altitude > 0) altitude--;
         }
 
 
@@ -158,12 +160,14 @@ void joystick_mode(void){
         while(ADC12CTL1 & ADC12BUSY);       // Wait for it to finish
         unsigned int yValue = ADC12MEM0;    // Read Y result
 
-        // X-axis altitude
-        if (xValue > 2300) {
+        // Y-axis altitude
+        if (yValue > 2300) {
             altitude++;
+            if (yValue > 3500) altitude++;
         }
-        if (xValue < 1700 && altitude > 0) {
+        if (yValue < 1700 && altitude > 0) {
             altitude--;
+            if (yValue < 500 && altitude > 0) altitude--;
         }
 
         // X-axis Logic (Red LED + Sound)
@@ -205,6 +209,8 @@ void show_screen(unsigned int x, unsigned int y){
 // Static variable to track the last image drawn to prevent flickering
     static const Graphics_Image* lastImage = NULL;
     const Graphics_Image* nextImage = &LevelImage; // Default
+    char altString[] = "Alt: 00000"; // Template string
+    static int lastAltitude = -1;
 
     // Determine Pitch (Y-axis) - Assuming Y > 2500 is Climbing, Y < 1500 is Descending
     // Determine Roll (X-axis)  - Assuming X > 2500 is Right Bank, X < 1500 is Left Bank
@@ -229,6 +235,28 @@ void show_screen(unsigned int x, unsigned int y){
     if (nextImage != lastImage) {
         Graphics_drawImage(&g_sContext, nextImage, 0, 0);
         lastImage = nextImage;
+        lastAltitude = -1; // Force altitude redraw because image cleared it
+    }
+    
+    if (altitude != lastAltitude) {
+        // Manual integer-to-string conversion
+
+        // Extract digits using modulo and division
+        altString[5] = (altitude / 10000) % 10 + '0';
+        altString[6] = (altitude / 1000) % 10 + '0';
+        altString[7] = (altitude / 100) % 10 + '0';
+        altString[8] = (altitude / 10) % 10 + '0';
+        altString[9] = altitude % 10 + '0';
+        
+        // Set colors (White text on Black background)
+        Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_WHITE);
+        Graphics_setBackgroundColor(&g_sContext, GRAPHICS_COLOR_BLACK);
+        
+        // Draw string at the top-center (x=64, y=10)
+        // OPAQUE_TEXT is critical to prevent numbers from stacking on top of each other
+        Graphics_drawStringCentered(&g_sContext, (int8_t *)altString, AUTO_STRING_LENGTH, 64, 10, OPAQUE_TEXT);
+        
+        lastAltitude = altitude;
     }
 }
 
