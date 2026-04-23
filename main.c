@@ -19,7 +19,9 @@ void uart_write_char(unsigned char ch);
 void uart_write_uint16(unsigned int n);
 void joystick_mode(void);
 void accel_mode(void);
+void show_screen(unsigned int x, unsigned int y);
 
+int altitude = 0;
 
 void main(void){
     WDTCTL = WDTPW | WDTHOLD;   //Stop the Watchdog timer
@@ -73,9 +75,19 @@ void accel_mode(void){
         while(ADC12CTL1 & ADC12BUSY);       // Wait for it to finish
         unsigned int yValue = ADC12MEM0;    // Read Y result
 
+        // X-axis altitude
+        if (xValue > 2100) {
+            altitude++;
+        }
+        if (xValue < 1900 && altitude > 0) {
+            altitude--;
+        }
+
+
         // X-axis Logic (Red LED + Sound)
         if ((xValue > 2500) | (xValue < 1500)){
             P1OUT |= redLED;
+            Play_Buzzer();
         }
         else {
             P1OUT &= ~redLED;
@@ -83,7 +95,8 @@ void accel_mode(void){
 
         // Y-axis Logic (Green LED + Sound)
         if ((yValue > 2500) | (yValue < 1500)){      
-            P9OUT |= greenLED;  
+            P9OUT |= greenLED;
+            Play_Buzzer();
         }
         else {
             P9OUT &= ~greenLED;
@@ -92,6 +105,7 @@ void accel_mode(void){
         //Center is about 2000; left and down are 1000, up and right are 3000
         uart_write_uint16(xValue);
         uart_write_uint16(yValue);
+        
 
         if((P3IFG & BUT) != 0){
             P3IFG &= ~BUT;
@@ -126,17 +140,27 @@ void joystick_mode(void){
         while(ADC12CTL1 & ADC12BUSY);       // Wait for it to finish
         unsigned int yValue = ADC12MEM0;    // Read Y result
 
+        // X-axis altitude
+        if (xValue > 2300) {
+            altitude++;
+        }
+        if (xValue < 1700 && altitude > 0) {
+            altitude--;
+        }
+
         // X-axis Logic (Red LED + Sound)
-        if ((xValue > 2500) | (xValue < 1500)){
+        if ((xValue > 3000) | (xValue < 1000)){
             P1OUT |= redLED;
+            Play_Buzzer();
         }
         else {
             P1OUT &= ~redLED;
         }
 
         // Y-axis Logic (Green LED + Sound)
-        if ((yValue > 2500) | (yValue < 1500)){      
+        if ((yValue > 3000) | (yValue < 1000)){      
             P9OUT |= greenLED;  
+            Play_Buzzer();
         }
         else {
             P9OUT &= ~greenLED;
@@ -225,7 +249,7 @@ void Play_Buzzer(void) {
     P2SEL0 &= ~BIT7;
     P2SEL1 &= ~BIT7;   // Plain GPIO, no timer
     int i;
-    for(i = 0; i < 10000; i++){
+    for(i = 0; i < 100; i++){
         P2OUT ^= BIT7;
         __delay_cycles(500);
     }
