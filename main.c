@@ -25,6 +25,9 @@ void accel_mode(void);
 void show_screen(unsigned int x, unsigned int y);
 void Initialize_Clock_System(void);
 
+extern Graphics_Context g_sContext;
+Graphics_Context g_sContext;
+
 extern const Graphics_Image LevelImage;
 extern const Graphics_Image StraightDescentImage;
 extern const Graphics_Image StraightClimbImage;
@@ -119,6 +122,7 @@ void accel_mode(void){
         //Center is about 2000; left and down are 1000, up and right are 3000
         uart_write_uint16(xValue);
         uart_write_uint16(yValue);
+        show_screen(xValue, yValue);
         
 
         if((P3IFG & BUT) != 0){
@@ -163,7 +167,7 @@ void joystick_mode(void){
         }
 
         // X-axis Logic (Red LED + Sound)
-        if ((xValue > 3000) | (xValue < 1000)){
+        if ((xValue > 3500) | (xValue < 500)){
             P1OUT |= redLED;
             Play_Buzzer();
         }
@@ -172,7 +176,7 @@ void joystick_mode(void){
         }
 
         // Y-axis Logic (Green LED + Sound)
-        if ((yValue > 3000) | (yValue < 1000)){      
+        if ((yValue > 3500) | (yValue < 500)){      
             P9OUT |= greenLED;  
             Play_Buzzer();
         }
@@ -180,22 +184,52 @@ void joystick_mode(void){
             P9OUT &= ~greenLED;
         }
 
+
+        //Center is about 2000; left and down are 1, up and right are 4000
+        uart_write_uint16(xValue);
+        uart_write_uint16(yValue);
+        show_screen(xValue, yValue);
+
         if((P3IFG & BUT) != 0){
             P3IFG &= ~BUT;
             __delay_cycles(250000);
             return;
         }
 
-        //Center is about 2000; left and down are 1, up and right are 4000
-        uart_write_uint16(xValue);
-        uart_write_uint16(yValue);
         __delay_cycles(50000);
     }
 
 }
 
 void show_screen(unsigned int x, unsigned int y){
-    
+// Static variable to track the last image drawn to prevent flickering
+    static const Graphics_Image* lastImage = NULL;
+    const Graphics_Image* nextImage = &LevelImage; // Default
+
+    // Determine Pitch (Y-axis) - Assuming Y > 2500 is Climbing, Y < 1500 is Descending
+    // Determine Roll (X-axis)  - Assuming X > 2500 is Right Bank, X < 1500 is Left Bank
+
+    if (y > 2300) { // CLIMBING
+        if (x > 2300)      nextImage = &ClimbingRightBankImage;
+        else if (x < 1700) nextImage = &ClimbingLeftBankImage;
+        else               nextImage = &StraightClimbImage;
+    } 
+    else if (y < 1700) { // DESCENDING
+        if (x > 2300)      nextImage = &DescendingRightBankImage;
+        else if (x < 1700) nextImage = &DescendingLeftBankImage;
+        else               nextImage = &StraightDescentImage;
+    } 
+    else { // LEVEL FLIGHT
+        if (x > 2300)      nextImage = &LevelRightBankImage;
+        else if (x < 1700) nextImage = &LevelLeftBankImage;
+        else               nextImage = &LevelImage;
+    }
+
+    // Only redraw if the state has changed
+    if (nextImage != lastImage) {
+        Graphics_drawImage(&g_sContext, nextImage, 0, 0);
+        lastImage = nextImage;
+    }
 }
 
 
@@ -353,8 +387,8 @@ void Initialize_lcd_screen(){
     // Configure clock system
     Initialize_Clock_System();
 
-    // Graphics functions
-    Graphics_Context g_sContext;        // Declare a graphic library context
+    // // Graphics functions
+    // Graphics_Context g_sContext;        // Declare a graphic library context
     Crystalfontz128x128_Init();         // Initialize the display
 
     // Set the screen orientation
